@@ -1,16 +1,31 @@
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
 class MatchResponse(BaseModel):
     match_image: str = Field(..., description="Base64 encoded string of feature keypoint match visualization")
-    aligned_image: str = Field(..., description="Base64 encoded string of final registered/aligned image")
-    rmse: float = Field(..., description="Root Mean Square Error of image registration in pixels")
-    inlier_ratio: float = Field(..., description="Ratio of feature matching inliers (0.0 to 1.0)")
+    match_image_pages: list[str] = Field(
+        default_factory=list,
+        description="Paged match visualizations with at most 100 correspondences per image",
+    )
+    aligned_image: str = Field(..., description="Base64 encoded image-derived source/reference blend")
+    rmse: float = Field(..., description="Illustrative synthetic demo RMSE; not measured from image matches")
+    inlier_ratio: float = Field(..., description="Illustrative synthetic demo inlier ratio; not measured")
     compute_time: float = Field(..., description="Pipeline processing duration in seconds")
+    result_mode: Literal["measured", "synthetic_demo"] = Field(
+        default="synthetic_demo",
+        description="Whether correspondence metrics are measured or synthetic demo data; the HTTP endpoint returns synthetic demo data",
+    )
+    aligned_image_status: Literal[
+        "registered",
+        "preprocessed_source_not_registered",
+    ] = Field(
+        default="registered",
+        description="Whether the returned surface image has actually been registered",
+    )
     match_details: dict[str, Any] | None = Field(
         default=None,
-        description="Optional LoFTR and RANSAC data for detailed visualization",
+        description="Correspondence details; synthetic values in the HTTP endpoint response",
     )
 
     class Config:

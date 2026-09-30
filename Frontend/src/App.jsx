@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import UploadPanel from './components/UploadPanel';
@@ -69,11 +69,12 @@ export default function App() {
                   Lunar Surface Image Registration
                 </h2>
                 <p className="text-xs text-slate-400 mt-1">
-                  Automated sub-pixel homography and keypoint feature matching for orbiter imagery.
+                  Lunar-Imagery surface alignment with detected correspondences and computed metrics.
                 </p>
               </div>
 
               <UploadPanel files={files} setFiles={setFiles} />
+
 
               <ExecuteButton
                 onExecute={handleExecute}
@@ -92,7 +93,12 @@ export default function App() {
               )}
 
               {isLoading && <Loader />}
-              {!isLoading && results && <ResultPanel results={results} />}
+              {!isLoading && results && (
+                <ResultPanel
+                  key={results.match_image_pages?.[0] || results.match_image}
+                  results={results}
+                />
+              )}
             </div>
           )}
 

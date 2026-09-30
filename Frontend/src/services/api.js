@@ -18,7 +18,9 @@ const apiClient = axios.create({
  * @param {File} files.refXml
  * @returns {Promise<Object>} API response containing base64 images and metrics
  */
-export const registerImages = async ({ sourceImg, sourceXml, refImg, refXml }) => {
+export const registerImages = async (
+  { sourceImg, sourceXml, refImg, refXml }
+) => {
   const formData = new FormData();
   formData.append('source_img', sourceImg);
   formData.append('source_xml', sourceXml);

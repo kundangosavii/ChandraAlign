@@ -20,7 +20,12 @@ router = APIRouter()
         500: {"model": ErrorDetailResponse, "description": "Server processing error"},
     },
     summary="Register and Align Lunar Surface Images",
-    description="Accepts source and reference images (.png) with corresponding mission metadata (.xml), performs sub-pixel feature registration, and returns aligned visual outputs with quality metrics."
+    description=(
+        "Accepts source and reference images (.png) with corresponding mission metadata "
+        "(.xml), returns an image-derived surface blend and clearly labeled synthetic "
+        "correspondences and quality metrics. Correspondence metrics are illustrative, "
+        "not measured scientific results."
+    )
 )
 async def match_images(
     source_img: UploadFile = File(..., description="Source lunar image (.png)"),
@@ -53,12 +58,17 @@ async def match_images(
             src_xml_path=src_xml_path,
             ref_img_path=ref_img_path,
             ref_xml_path=ref_xml_path,
+            use_synthetic_demo=True,
         )
 
         record_execution(
             status="SUCCESS",
             duration=time.perf_counter() - started_at,
-            rmse=result.get("rmse"),
+            rmse=(
+                result.get("rmse")
+                if result["result_mode"] == "measured"
+                else None
+            ),
         )
         return MatchResponse(**result)
 

@@ -10,6 +10,16 @@
  - Inlier ratio
  - Compute time
 
+ **Synthetic demo output:** The registration endpoint always returns generated synthetic
+ correspondences and illustrative metrics; there is no UI or API switch to measured
+ correspondence results. These values are not detected image matches or scientific
+ measurements. The source/reference images are still processed to produce the displayed
+ image-derived surface blend. Synthetic values are labeled in the result panel and match
+ visualization.
+
+ Match visualizations and coordinate listings are paginated in batches of 100. Coordinate
+ rows use sequential serial numbers within the confidence-sorted, filtered result set.
+
  ## 2. System Type
 
  Full-stack machine learning system:

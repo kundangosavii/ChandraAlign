@@ -12,7 +12,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-800 bg-slate-900/50 flex flex-col justify-between p-4 shrink-0 hidden md:flex">
+    <aside className="w-64 border-r border-slate-800 bg-slate-900/50 flex flex-col justify-between p-4 shrink-0 md:flex">
       <div className="space-y-1">
         <div className="px-3 py-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
           Modules
